@@ -15,15 +15,41 @@ public class Chamados implements Serializable {
 
     @Id
     @GeneratedValue
-    private int id;
-    @JsonFormat
-    private LocalDate dataAbertura = LocalDate.now();
+    protected int id;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    protected LocalDate dataAbertura = LocalDate.now();
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    protected LocalDate dataFechamento = LocalDate.now();
 
-    private String prioridade;
-    private String status;
-    private String title;
+    protected String prioridade;
+    protected String status;
+    protected String title;
+    protected String observacao;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Cliente usuario;
+    @JoinColumn(name = "cliente_id")
+    protected Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "tecnico_id")
+    protected Tecnico tecnico;
+
+
+    public Chamados(int id, LocalDate dataAbertura, LocalDate dataFechamento, String prioridade, String status, String title, String observacao, Cliente cliente, Tecnico tecnico) {
+        super();
+
+        this.id = id;
+        this.dataAbertura = dataAbertura;
+        this.dataFechamento = dataFechamento;
+        this.prioridade = prioridade;
+        this.status = status;
+        this.title = title;
+        this.observacao = observacao;
+        this.cliente = cliente;
+        this.tecnico = tecnico;
+    }
+
+    public Chamados() {
+        super();
+    }
 }

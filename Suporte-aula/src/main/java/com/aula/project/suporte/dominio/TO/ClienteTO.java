@@ -1,17 +1,17 @@
 package com.aula.project.suporte.dominio.TO;
 
-import com.aula.project.suporte.dominio.Tecnico;
+import com.aula.project.suporte.dominio.Cliente;
 import com.aula.project.suporte.dominio.enumeracao.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.annotation.Nonnull;
 
-
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class TecnicoTO {
+public class ClienteTO implements Serializable {
+
     protected Integer id;
 
     protected String nome;
@@ -23,20 +23,19 @@ public class TecnicoTO {
     @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate dataCriacao = LocalDate.now();
 
-    public TecnicoTO(Tecnico obj) {
+    public ClienteTO(Cliente obj) {
         super();
         this.id = obj.getId();
         this.nome = obj.getName();
         this.cpf = obj.getCpf();
         this.email = obj.getEmail();
         this.senha = obj.getSenha();
-
         this.perfil = obj.getPerfil().stream()
                 .map(x -> x.getCodigo()).collect(Collectors.toSet());
         this.dataCriacao = obj.getDataCriacao();
     }
 
-    public TecnicoTO() {
+    public ClienteTO() {
         super();
     }
 
@@ -85,7 +84,6 @@ public class TecnicoTO {
     }
 
     public void setPerfil(Set<Integer> perfil) {
-
         this.perfil = perfil;
     }
 

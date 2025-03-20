@@ -1,15 +1,15 @@
 package com.aula.project.suporte.dominio;
 
 import com.aula.project.suporte.dominio.enumeracao.Perfil;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 @Entity
@@ -20,25 +20,28 @@ public abstract class Pessoa {
 
     @Id
     @GeneratedValue
-    private int id;
+    protected int id;
     @Column(name = "endereco")
-    private String endereco;
+    protected String endereco;
     @Column(name = "name")
-    private String name;
+    protected String name;
     @Column(name = "email")
-    private String email;
+    protected String email;
     @Column(name = "phone")
-    private String phone;
+    protected String phone;
     @Column(name = "cpf")
-    private String cpf;
+    protected String cpf;
     @Column(name = "senha")
-    private String senha;
+    protected String senha;
 
-    private Set<Perfil> perfil = new HashSet<>();
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    protected LocalDate dataCriacao = LocalDate.now();
 
-    public Set<Perfil> getPerfil() {
-        return perfil;
-    }
+    @Getter
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "perfil")
+    @Enumerated(EnumType.STRING)
+    protected Set<Perfil> perfil = new HashSet<>();
 
     public void addPerfil(Perfil perfil) {
         this.perfil.add(perfil);
